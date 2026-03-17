@@ -3,7 +3,7 @@ import React from 'react'
 function TotalStats() {
   return (
     <>
-    <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full mx-2">
         <div className="stats stats-vertical lg:stats-horizontal shadow">
           <div className="stat place-items-center">
             <div className="stat-title">Protein</div>
