@@ -3,7 +3,7 @@ import React from 'react'
 function StatChange() {
   return (
     <>
-    <div className="flex items-center w-full flex-col mx-2">
+    <div className="flex items-center w-full flex-col mx-6">
     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
       <legend className="fieldset-legend whitespace-nowrap">Add protein</legend>
       <div className="join">
