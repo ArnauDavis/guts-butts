@@ -6,9 +6,9 @@ function Footer() {
     <footer className="footer sm:footer-horizontal bg-base-200 text-base-content p-10 mt-4">
       <aside>
         <p>
-          Butts and Guts
+          Buttz and Gutz
           <br />
-          Big results, no butt about it.
+          Because results require gutz, no buttz about it.
         </p>
       </aside>
        <p>Copyright © {new Date().getFullYear()} - All right reserved</p>

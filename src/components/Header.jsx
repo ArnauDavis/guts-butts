@@ -18,7 +18,7 @@ function Header() {
     </div>
   </div>
   <div className="navbar-center">
-    <a className="btn btn-ghost text-xl">Butts & Guts</a>
+    <a className="btn btn-ghost text-xl">Buttz & Gutz</a>
   </div>
   <div className="navbar-end">
     <label className="flex cursor-pointer gap-2">
