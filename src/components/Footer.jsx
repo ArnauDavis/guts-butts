@@ -8,7 +8,18 @@ function Footer() {
         <p>
           Buttz and Gutz
           <br />
-          Because results require gutz, no buttz about it.
+          <span>
+          Because
+          <span className="text-rotate">
+            <span className='mx-1'>
+              <span className="bg-teal-400 text-teal-800 px-2">growth</span>
+              <span className="bg-blue-400 text-blue-800 px-2">change</span>
+              <span className="bg-green-400 text-green-800 px-2">health</span>
+              <span className="bg-red-400 text-red-800 px-2">action</span>
+            </span>
+          </span>
+        </span>
+        requires gutz, no buttz about it.
         </p>
       </aside>
        <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
