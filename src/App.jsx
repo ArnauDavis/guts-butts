@@ -8,11 +8,12 @@ import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import TotalStats from './components/TotalStats.jsx'
 import StatChange from './components/StatChange.jsx'
+import StatsHistory from "./components/StatsHistory.jsx"
 
 
 
 function App() {
-    const [stats, setStats] = useState([])
+  const [stats, setStats] = useState([])
   useEffect(() => {
     getStats()
   }, [])
@@ -43,6 +44,7 @@ function App() {
     <>
       <Header/>
       <TotalStats stats={stats}/>
+      <StatsHistory stats={stats}/>
       <StatChange addStat={addStat} />
       <Footer/>
     </>
