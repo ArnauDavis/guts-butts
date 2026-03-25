@@ -7,25 +7,32 @@ function TotalStats({stats}) {
   return (
     <>
     <div className="flex justify-center w-full my-6">
-        <div className="stats stats-vertical lg:stats-horizontal shadow">
-          <div className="stat place-items-center">
-            <div className="stat-title">Protein</div>
-            <div className="stat-value">{totalProtein} grams</div>
-            <div className="stat-desc">From January 1st to February 1st</div>
+      <div className="stats stats-vertical lg:stats-horizontal glass border border-white/10 shadow-2xl rounded-box overflow-hidden">
+        
+        {/* Protein Stat */}
+        <div className="stat place-items-center border-white/5">
+          <div className="stat-title text-base-content/60 font-medium">Protein</div>
+          <div className="stat-value text-primary drop-shadow-sm">
+            {totalProtein} <span className="text-sm font-normal opacity-70">grams</span>
           </div>
-
-          <div className="stat place-items-center">
-            <div className="stat-title">Calories</div>
-            <div className="stat-value text-secondary">{totalCals}</div>
-            <div className="stat-desc text-secondary">↗︎ 40 (2%) from last month</div>
-          </div>
-
-          <div className="stat place-items-center">
-            <div className="stat-title">Total Workouts</div>
-            <div className="stat-value">3</div>
-            <div className="stat-desc">↘︎ 1 (25%)</div>
-          </div>
+          <div className="stat-desc opacity-50">Jan 1st — Feb 1st</div>
         </div>
+      
+        {/* Calories Stat */}
+        <div className="stat place-items-center border-white/5 bg-white/5">
+          <div className="stat-title text-base-content/60 font-medium">Calories</div>
+          <div className="stat-value text-secondary drop-shadow-sm">{totalCals}</div>
+          <div className="stat-desc text-secondary opacity-80 font-medium">↗︎ 40 (2%)</div>
+        </div>
+      
+        {/* Workouts Stat */}
+        <div className="stat place-items-center border-white/5">
+          <div className="stat-title text-base-content/60 font-medium">Total Workouts</div>
+          <div className="stat-value text-accent drop-shadow-sm">3</div>
+          <div className="stat-desc opacity-50 font-medium text-error">↘︎ 1 (25%)</div>
+        </div>
+        
+      </div>
     </div>
     </>
   )

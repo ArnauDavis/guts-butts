@@ -4,6 +4,8 @@ import { useState } from "react"
 function StatChange({addStat}) {
   const [calories, setCalories] = useState("")
   const [protein, setProtein] = useState("")
+
+
    async function handleSubmit(e) {
     e.preventDefault()
 
@@ -15,65 +17,51 @@ function StatChange({addStat}) {
     setCalories("")
     setProtein("")
    }
+
+
   return (
     <>
 
 
     <div className="flex items-center w-full flex-col my-6">
-    <form onSubmit={handleSubmit} style={{ margin: "20px" }}>
-      <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-        <legend className="fieldset-legend whitespace-nowrap">Add calories</legend>
-          <div className="join">
+      <form 
+        onSubmit={handleSubmit} 
+        className="glass p-8 rounded-box flex flex-col items-center space-y-6 border border-white/10 shadow-2xl"
+      >
+        <h2 className="text-xl font-bold opacity-80">Track Progress</h2>
+
+        <div className="flex flex-col gap-4">
+          {/* Calories Input */}
+          <fieldset className="fieldset p-0 bg-transparent">
+            <legend className="fieldset-legend text-xs uppercase tracking-widest opacity-60">Calories</legend>
             <input
-              className="input join-item"
+              className="input input-bordered bg-base-100/30 backdrop-blur-sm border-white/10 focus:outline-accent"
               type="number"
-              placeholder="Calories"
+              placeholder="0 kcal"
               value={calories}
               onChange={(e) => setCalories(e.target.value)}
             />
-          </div>
-      </fieldset>
-      <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-        <legend className="fieldset-legend whitespace-nowrap">Add protein</legend>
-          <div className="join">
+          </fieldset>
+
+          {/* Protein Input */}
+          <fieldset className="fieldset p-0 bg-transparent">
+            <legend className="fieldset-legend text-xs uppercase tracking-widest opacity-60">Protein</legend>
             <input
-              className="input join-item"
+              className="input input-bordered bg-base-100/30 backdrop-blur-sm border-white/10 focus:outline-accent"
               type="number"
-              placeholder="Protein (g)"
+              placeholder="0 g"
               value={protein}
               onChange={(e) => setProtein(e.target.value)}
             />
-          </div>
-      </fieldset>
+          </fieldset>
+        </div>
 
-      <button className="btn btn-accent" type="submit">Add Stats</button>
-    </form>
+        <button className="btn btn-accent btn-wide shadow-lg" type="submit">
+          Add Stats
+        </button>
+      </form>
     </div>
 
-
-    <div className="flex items-center w-full flex-col my-6">
-    <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-      <legend className="fieldset-legend whitespace-nowrap">Add protein</legend>
-      <div className="join">
-        <input type="number" className="input join-item" placeholder="Protein" />
-        <button className="btn join-item">Submit</button>
-      </div>
-    </fieldset>
-    <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-      <legend className="fieldset-legend whitespace-nowrap">Add calories</legend>
-      <div className="join">
-        <input type="number" className="input join-item" placeholder="Calories" />
-        <button className="btn join-item">Submit</button>
-      </div>
-    </fieldset>
-    <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-      <legend className="fieldset-legend whitespace-nowrap">Add workout</legend>
-      <div className="join">
-        <input type="number" className="input join-item" placeholder="Workout" />
-        <button className="btn join-item">Submit</button>
-      </div>
-    </fieldset>
-    </div>
     </>
   )
 }

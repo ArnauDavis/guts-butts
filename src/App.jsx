@@ -40,11 +40,41 @@ function App() {
     }
   }
 
+
+  async function updateStat(statId, newCalories, newProtein, newDate) {
+    const { data, error } = await supabase
+      .from('stats')
+      .update({ calories: newCalories, protein: newProtein, created_at: newDate })
+      .eq('id', statId)
+      .select()
+
+    if (error) {
+      console.error('Update failed:', error)
+    } else {
+      setStats(prev =>
+        prev.map(stat => (stat.id === statId ? { ...stat, ...data[0] } : stat))
+      )
+    }
+  }
+
+  async function deleteStat(id){
+    const { data, error } = await supabase
+      .from("stats")
+      .delete()
+      .eq('id', id)
+      .select()
+      if (error) console.error(error)
+      else {
+      console.log('Deleted:', data)
+      setStats(stats.filter(stat => stat.id !== id))
+    }
+  }
+
   return (
     <>
       <Header/>
       <TotalStats stats={stats}/>
-      <StatsHistory stats={stats}/>
+      <StatsHistory stats={stats} updateStat={updateStat} deleteStat={deleteStat}/>
       <StatChange addStat={addStat} />
       <Footer/>
     </>
