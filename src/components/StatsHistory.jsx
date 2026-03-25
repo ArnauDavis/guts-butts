@@ -60,7 +60,7 @@ function StatsHistory({stats, deleteStat, updateStat}) {
     )
   return (
     <>
-    <div className="overflow-x-auto glass rounded-box border border-white/10 shadow-xl mx-8">
+    <div className="overflow-x-auto glass rounded-box border border-white/10 shadow-xl mx-2">
       <table className="table">
         {/* Head */}
         <thead className="bg-base-content/10 text-base-content">

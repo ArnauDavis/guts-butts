@@ -3,7 +3,7 @@ import React from 'react'
 function Header() {
   return (
     <>
-      <div className="sticky top-0 z-50 w-full px-4 pt-4">
+      <div className="sticky top-0 z-50 w-full px-2 pt-4">
         <div className="navbar glass min-h-16 rounded-2xl border border-white/10 shadow-lg px-4 backdrop-blur-xl bg-base-100/60">
           <div className="navbar-start">
             <div className="dropdown">
