@@ -61,59 +61,72 @@ function StatsHistory({stats, deleteStat, updateStat}) {
   return (
     <>
     <div className="overflow-x-auto glass rounded-box border border-white/10 shadow-xl mx-2">
-      <table className="table">
+      <table className="table w-full">
         {/* Head */}
         <thead className="bg-base-content/10 text-base-content">
           <tr className="border-b border-white/10">
-            <th className="font-bold uppercase tracking-wider text-xs opacity-70">Date</th>
-            <th className="font-bold uppercase tracking-wider text-xs opacity-70">Calories</th>
-            <th className="font-bold uppercase tracking-wider text-xs opacity-70">Protein</th>
-            <th></th>
+            <th className="font-bold uppercase tracking-wider text-[10px] sm:text-xs opacity-70">Date & Time</th>
+            <th className="font-bold uppercase tracking-wider text-[10px] sm:text-xs opacity-70 text-center">Calories</th>
+            <th className="font-bold uppercase tracking-wider text-[10px] sm:text-xs opacity-70 text-center">Protein</th>
+            <th className="w-16"></th>
           </tr>
         </thead>
 
         <tbody className="text-base-content/90">
           {sortedStats.map((stat) => (
             <tr key={stat.id} className="border-b border-white/5 hover:bg-base-100/20 transition-colors group">
-              {/* Date */}
-              <td className="opacity-70 font-mono text-sm">
-                {formatDateTime(stat.created_at)}
+
+              {/* Date and time */}
+              <td className="whitespace-nowrap py-3">
+                <div className="flex flex-col leading-tight">
+                  <span className="font-mono text-xs sm:text-sm font-bold tracking-tight">
+                    {new Date(stat.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                  <span className="font-mono text-[10px] sm:text-xs opacity-50 uppercase">
+                    {new Date(stat.created_at).toLocaleDateString()}
+                  </span>
+                </div>
               </td>
-
-              {/* Calories */}
-              <td className="font-bold text-secondary drop-shadow-[0_0_8px_rgba(var(--s),0.2)]">
-                {stat.calories}
-                <span className="text-[10px] ml-1 opacity-50 uppercase font-normal">kcal</span>
+          
+              {/* Calories with kcal */}
+              <td className="text-center py-3">
+                <span className="font-bold text-secondary drop-shadow-[0_0_8px_rgba(var(--s),0.2)] text-sm sm:text-base">
+                  {stat.calories}
+                  <span className="text-[10px] ml-0.5 opacity-60 font-normal">kcal</span>
+                </span>
               </td>
-
-              {/* Protein */}
-              <td className="font-bold text-primary drop-shadow-[0_0_8px_rgba(var(--p),0.2)]">
-                {stat.protein}
-                <span className="text-[10px] ml-1 opacity-50 uppercase font-normal">g</span>
+          
+              {/* Protein with g */}
+              <td className="text-center py-3">
+                <span className="font-bold text-primary drop-shadow-[0_0_8px_rgba(var(--p),0.2)] text-sm sm:text-base">
+                  {stat.protein}
+                  <span className="text-[10px] ml-0.5 opacity-60 font-normal">g</span>
+                </span>
               </td>
-
-              <td className="flex gap-2 justify-end">
-                {/* Edit Button */}
-                <button 
-                  className="btn btn-ghost btn-sm bg-info/10 hover:bg-info/30 text-info border border-info/20 backdrop-blur-md transition-all"
-                  onClick={() => handleEditClick(stat)}
-                  title="Edit"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                  </svg>
-                </button>
-
-                {/* Delete Button */}
-                <button 
-                  className="btn btn-ghost btn-sm bg-error/10 hover:bg-error/30 text-error border border-error/20 backdrop-blur-md transition-all"
-                  onClick={() => deleteStat(stat.id)}
-                  title="Delete"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                  </svg>
-                </button>
+          
+              {/* Actions */}
+              <td className="py-3 text-right">
+                <div className="inline-flex items-center gap-1 sm:gap-2 align-middle">
+                  {/* Edit Button */}
+                  <button 
+                    className="btn btn-ghost btn-xs sm:btn-sm h-8 w-8 min-h-0 p-0 bg-info/10 hover:bg-info/30 text-info border border-info/20 backdrop-blur-md"
+                    onClick={() => handleEditClick(stat)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                    </svg>
+                  </button>
+          
+                  {/* Delete Button */}
+                  <button 
+                    className="btn btn-ghost btn-xs sm:btn-sm h-8 w-8 min-h-0 p-0 bg-error/10 hover:bg-error/30 text-error border border-error/20 backdrop-blur-md"
+                    onClick={() => deleteStat(stat.id)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                    </svg>
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
