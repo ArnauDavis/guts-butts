@@ -98,7 +98,7 @@ function StatsHistory({stats, deleteStat, updateStat}) {
           
               {/* Protein with g */}
               <td className="text-center py-3">
-                <span className="font-bold text-primary drop-shadow-[0_0_8px_rgba(var(--p),0.2)] text-sm sm:text-base">
+                <span className="font-bold text-primary drop-shadow-[0_0_12px_rgba(217,249,157,0.4)] text-sm sm:text-base">
                   {stat.protein}
                   <span className="text-[10px] ml-0.5 opacity-60 font-normal">g</span>
                 </span>

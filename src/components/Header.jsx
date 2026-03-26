@@ -1,6 +1,11 @@
 import React from 'react'
+import { supabase } from "../../utils/supabaseClient.js"
 
 function Header() {
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.error("Error logging out:", error.message);
+  }
   return (
     <>
       <div className="sticky top-0 z-50 w-full px-2 pt-4">
@@ -18,11 +23,27 @@ function Header() {
                 <li><a className="hover:bg-primary/20">Homepage</a></li>
                 <li><a className="hover:bg-primary/20">Portfolio</a></li>
                 <li><a className="hover:bg-primary/20">About</a></li>
+
+                {/* Divider and Logout */}
+                <div className="divider my-1 opacity-20"></div>
+                <li className="menu-title opacity-40 text-[10px] uppercase tracking-widest">Account</li>
+                <li>
+                  <button 
+                    onClick={handleLogout}
+                    className="text-error hover:bg-error/20 active:bg-error/30 transition-colors flex justify-between"
+                  >
+                    Logout
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                    </svg>
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
 
-          <div className="navbar-center">
+          {/* Center: Brand */}
+        <div className="navbar-center">
             <a className="btn btn-ghost text-xl font-black tracking-tighter uppercase italic text-primary drop-shadow-sm">
               Buttz <span className="text-base-content">&</span> Gutz
             </a>

@@ -2,3 +2,36 @@
 @plugin "daisyui"{
   themes: light --default, dark --prefersdark, dracula;
 }
+
+@plugin "daisyui/theme" {
+  name: "dracula";
+  /* Primary: Volt Lime (Protein) - The "Hero" color */
+  --color-primary: oklch(88% 0.21 115);
+  --color-primary-content: oklch(25% 0.05 115);
+
+  /* Secondary: Electric Cyan (Calories) - High contrast to the Lime */
+  --color-secondary: oklch(75% 0.15 200);
+  --color-secondary-content: oklch(20% 0.04 200);
+
+  /* Accent: Electric Lavender (Workouts/Actions) */
+  --color-accent: oklch(70% 0.18 305);
+  --color-accent-content: oklch(20% 0.05 305);
+  
+  /* Base: Deep Charcoal Navy - Makes glass look like crystal */
+  --color-base-100: oklch(14% 0.02 250);
+  --color-base-200: oklch(10% 0.02 250);
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  /* Primary: Racing Green (Protein) - Sharp and professional */
+  --color-primary: oklch(50% 0.18 135);
+  --color-primary-content: oklch(98% 0.01 135);
+
+  /* Secondary: Deep Navy (Calories) */
+  --color-secondary: oklch(35% 0.1 240);
+  --color-secondary-content: oklch(95% 0.01 240);
+
+  /* Base: Pure Frost */
+  --color-base-100: oklch(98% 0.01 200);
+}
