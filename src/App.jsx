@@ -99,7 +99,7 @@ function App() {
       ) : (
         <>
           <Header session={session} />
-          <main className="flex-grow space-y-8 pb-20">
+          <main className="grow space-y-8 pb-20">
             <TotalStats stats={stats} />
             <StatChange addStat={addStat} />
             <StatsHistory stats={stats} updateStat={updateStat} deleteStat={deleteStat} />
