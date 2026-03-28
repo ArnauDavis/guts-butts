@@ -7,6 +7,7 @@ function StatsHistory({stats, deleteStat, updateStat}) {
     const [tempProtein, setTempProtein] = useState("")
     const [tempDate, setTempDate] = useState("")
     const [sortOrder, setSortOrder] = useState("desc")
+    const [deletingStat, setDeletingStat] = useState(null)
 
     // Helper to convert DB timestamp to 'YYYY-MM-DDTHH:mm' for the input
   const formatForInput = (timestamp) => {
@@ -33,6 +34,19 @@ function StatsHistory({stats, deleteStat, updateStat}) {
         setEditingStat(null)
         document.getElementById('edit_modal').close()
       }
+
+    const prepDelete = (stat) => {
+      setDeletingStat(stat);
+      document.getElementById('delete_confirm_modal').showModal();
+    }
+
+    const confirmDelete = async () => {
+      if (deletingStat) {
+        await deleteStat(deletingStat.id);
+        setDeletingStat(null);
+        document.getElementById('delete_confirm_modal').close();
+      }
+    }
     
 
     const formatDateTime = (timestamp) => {
@@ -57,13 +71,13 @@ function StatsHistory({stats, deleteStat, updateStat}) {
   }
 
   const sortedStats = stats.toSorted((a, b) => {
-  const dateA = new Date(a.created_at);
-  const dateB = new Date(b.created_at);
-  return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
-  });
+  const dateA = new Date(a.created_at)
+  const dateB = new Date(b.created_at)
+  return sortOrder === "desc" ? dateB - dateA : dateA - dateB
+  })
   
   const toggleSort = () => {
-    setSortOrder(prev => prev === "desc" ? "asc" : "desc");
+    setSortOrder(prev => prev === "desc" ? "asc" : "desc")
   }
 
   return (
@@ -143,7 +157,7 @@ function StatsHistory({stats, deleteStat, updateStat}) {
                   {/* Delete Button */}
                   <button 
                     className="btn btn-ghost btn-xs sm:btn-sm h-8 w-8 min-h-0 p-0 bg-error/10 hover:bg-error/30 text-error border border-error/20 backdrop-blur-md"
-                    onClick={() => deleteStat(stat.id)}
+                    onClick={() => prepDelete(stat)}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -214,6 +228,35 @@ function StatsHistory({stats, deleteStat, updateStat}) {
             onClick={handleSave}
           >
             Save Changes
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    {/* --- Delete Confirmation Modal --- */}
+    <dialog id="delete_confirm_modal" className="modal backdrop-blur-sm">
+      <div className="modal-box border border-error/20 bg-base-100 shadow-2xl">
+        <div className="flex items-center gap-3 text-error mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+          </svg>
+          <h3 className="font-bold text-lg">Are you sure?</h3>
+        </div>
+
+        <p className="py-2 opacity-70">
+          This will permanently remove the entry from <span className="font-mono font-bold text-error">{deletingStat ? new Date(deletingStat.created_at).toLocaleDateString() : ''}</span>. 
+          This action cannot be undone.
+        </p>
+
+        <div className="modal-action">
+          <form method="dialog">
+            <button className="btn btn-ghost" onClick={() => setDeletingStat(null)}>Cancel</button>
+          </form>
+          <button 
+            className="btn btn-error text-white" 
+            onClick={confirmDelete}
+          >
+            Yes, Delete
           </button>
         </div>
       </div>
