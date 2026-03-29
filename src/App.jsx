@@ -10,6 +10,7 @@ import StatsHistory from "./components/StatsHistory.jsx"
 
 function App() {
   const [stats, setStats] = useState([])
+  const [goals, setGoals] = useState(null)
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -31,8 +32,10 @@ function App() {
   useEffect(() => {
     if (session) {
       getStats()
+      getGoals()
     } else {
       setStats([]) // Clear stats on logout
+      setGoals(null)
     }
   }, [session])
 
@@ -46,6 +49,21 @@ function App() {
 
     if (error) console.error(error)
     else setStats(data)
+  }
+  
+
+  async function getGoals() {
+    const { data, error } = await supabase
+      .from("goals")
+      .select()
+      .eq('user_id', session.user.id)
+      .maybeSingle()
+
+    if (error) {
+      console.error("Error fetching goals:", error)
+    } else {
+      setGoals(data)
+    }
   }
 
 
@@ -77,6 +95,23 @@ function App() {
       )
   }
 
+  async function updateGoals(goalUpdate) {
+    // goalUpdate should look like { daily_goal_calories: 2500 }
+    const { data, error } = await supabase
+      .from("goals")
+      .upsert({ 
+        user_id: session.user.id, 
+        ...goalUpdate 
+      }, { onConflict: 'user_id' }) // Tells Supabase to update if user_id exists
+      .select()
+    
+    if (error) {
+      console.error("Error updating goals:", error)
+    } else {
+      setGoals(data[0])
+    }
+  }
+
   async function deleteStat(id) {
     const { data, error } = await supabase
       .from("stats")
@@ -100,7 +135,7 @@ function App() {
         <>
           <Header session={session} />
           <main className="grow space-y-8 pb-20">
-            <TotalStats stats={stats} />
+            <TotalStats stats={stats} goals={goals} updateGoals={updateGoals}/>
             <StatChange addStat={addStat} />
             <StatsHistory stats={stats} updateStat={updateStat} deleteStat={deleteStat} />
           </main>
