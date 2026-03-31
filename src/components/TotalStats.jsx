@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 function TotalStats({stats, goals, updateGoals}) {
   const [view, setView] = useState('daily') // Toggle between 'daily' and 'weekly'
+  const checkboxRef = useRef(null) // To toggle dropdown form
 
   // Basic totals (All time)
   let totalCals = stats.reduce((sum, stat)=> sum + stat.calories, 0)
@@ -161,88 +162,83 @@ function TotalStats({stats, goals, updateGoals}) {
     </div>
 
     {/* Form to manage all goals */}
-    <div className="mx-4 mt-12 mb-10">
-  <div className="collapse bg-base-200/40 border border-white/5 backdrop-blur-md rounded-3xl shadow-xl">
-    {/* Hidden checkbox handles the toggle logic */}
-    <input type="checkbox" className="peer" /> 
-
-    {/* Header - Always Visible */}
-    <div className="collapse-title p-6 bg-white/5 flex justify-between items-center cursor-pointer">
-      <div>
-        <h3 className="text-lg font-bold flex items-center gap-2">
-          <span className="w-2 h-6 bg-primary rounded-full"></span>
-          Target Settings
-        </h3>
-        <p className="text-xs opacity-50">Adjust your daily and weekly requirements</p>
-      </div>
-      
-      {/* The Arrow Icon */}
-      <div className="transition-transform duration-300 peer-checked:rotate-180">
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          strokeWidth={2.5} 
-          stroke="currentColor" 
-          className="w-5 h-5 opacity-50"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-        </svg>
-      </div>
-    </div>
-
-    {/* Collapsible Content */}
-    <div className="collapse-content px-0">
-      <form 
-        className="p-6 space-y-6 border-t border-white/5"
-        onSubmit={(e) => {
-          e.preventDefault()
-          const formData = new FormData(e.target)
-          updateGoals({
-            daily_goal_calories: Number(formData.get('daily_cals')),
-            daily_goal_protein: Number(formData.get('daily_protein')),
-            weekly_goal_calories: Number(formData.get('weekly_cals')),
-            weekly_goal_protein: Number(formData.get('weekly_protein'))
-          })
-        }}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Daily Column */}
-          <div className="space-y-4">
-            <h4 className="text-[10px] uppercase font-bold tracking-widest text-primary">Daily Targets</h4>
-            <div className="form-control">
-              <label className="label text-[10px] uppercase opacity-40 font-bold mr-2">Calories</label>
-              <input name="daily_cals" type="number" defaultValue={goals?.daily_goal_calories} className="input input-ghost bg-white/5 focus:bg-white/10 border-white/10" placeholder="2000" />
-            </div>
-            <div className="form-control">
-              <label className="label text-[10px] uppercase opacity-40 font-bold mr-2">Protein (g)</label>
-              <input name="daily_protein" type="number" defaultValue={goals?.daily_goal_protein} className="input input-ghost bg-white/5 focus:bg-white/10 border-white/10" placeholder="150" />
-            </div>
+      <div className="mx-4 mt-12 mb-10">
+        <div className="collapse collapse-arrow bg-base-200/40 border border-white/5 backdrop-blur-md rounded-3xl shadow-xl text-primary">
+          <input 
+            type="checkbox" 
+            ref={checkboxRef} 
+            className="peer" 
+          /> 
+  
+          {/* Header */}
+          <div className="collapse-title p-6 bg-white/5 pr-12 text-base-content">
+            <h3 className="text-lg font-bold flex items-center gap-2">
+              <span className="w-2 h-6 bg-primary rounded-full"></span>
+              Target Settings
+            </h3>
+            <p className="text-xs opacity-50 uppercase tracking-widest">Adjust your daily and weekly requirements</p>
           </div>
-
-          {/* Weekly Column */}
-          <div className="space-y-4">
-            <h4 className="text-[10px] uppercase font-bold tracking-widest text-secondary">Weekly Targets</h4>
-            <div className="form-control">
-              <label className="label text-[10px] uppercase opacity-40 font-bold mr-2">Calories</label>
-              <input name="weekly_cals" type="number" defaultValue={goals?.weekly_goal_calories} className="input input-ghost bg-white/5 focus:bg-white/10 border-white/10" placeholder="14000" />
-            </div>
-            <div className="form-control">
-              <label className="label text-[10px] uppercase opacity-40 font-bold mr-2">Protein (g)</label>
-              <input name="weekly_protein" type="number" defaultValue={goals?.weekly_goal_protein} className="input input-ghost bg-white/5 focus:bg-white/10 border-white/10" placeholder="1050" />
-            </div>
+    
+          {/* Collapsible Content */}
+          <div className="collapse-content text-base-content">
+            <form 
+              className="pt-6 space-y-6 border-t border-white/5"
+              onSubmit={(e) => {
+                e.preventDefault()
+                const formData = new FormData(e.target)
+                
+                updateGoals({
+                  daily_goal_calories: Number(formData.get('daily_cals')),
+                  daily_goal_protein: Number(formData.get('daily_protein')),
+                  weekly_goal_calories: Number(formData.get('weekly_cals')),
+                  weekly_goal_protein: Number(formData.get('weekly_protein'))
+                })
+                
+                // 4. THE MAGIC LINE: This unchecks the box and closes the accordion
+                if (checkboxRef.current) {
+                  checkboxRef.current.checked = false
+                }
+              }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                {/* Daily Column */}
+                <div className="space-y-4">
+                  <h4 className="text-[10px] uppercase font-bold tracking-widest text-primary mb-2">Daily Targets</h4>
+                  <div className="flex justify-between items-center">
+                    <label className="text-[10px] uppercase opacity-40 font-black">Calories</label>
+                    <input name="daily_cals" type="number" defaultValue={goals?.daily_goal_calories} className="input input-ghost bg-white/5 border-white/10 w-32 text-right focus:bg-white/10" />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <label className="text-[10px] uppercase opacity-40 font-black">Protein (g)</label>
+                    <input name="daily_protein" type="number" defaultValue={goals?.daily_goal_protein} className="input input-ghost bg-white/5 border-white/10 w-32 text-right focus:bg-white/10" />
+                  </div>
+                </div>
+            
+                {/* Weekly Column */}
+                <div className="space-y-4">
+                  <h4 className="text-[10px] uppercase font-bold tracking-widest text-secondary mb-2">Weekly Targets</h4>
+                  <div className="flex justify-between items-center">
+                    <label className="text-[10px] uppercase opacity-40 font-black">Calories</label>
+                    <input name="weekly_cals" type="number" defaultValue={goals?.weekly_goal_calories} className="input input-ghost bg-white/5 border-white/10 w-32 text-right focus:bg-white/10" />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <label className="text-[10px] uppercase opacity-40 font-black">Protein (g)</label>
+                    <input name="weekly_protein" type="number" defaultValue={goals?.weekly_goal_protein} className="input input-ghost bg-white/5 border-white/10 w-32 text-right focus:bg-white/10" />
+                  </div>
+                </div>
+            
+              </div>
+            
+              <div className="pt-4">
+                <button type="submit" className="btn btn-primary btn-block rounded-2xl shadow-lg shadow-primary/20">
+                  Save Targets
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-
-        <div className="pt-4">
-          <button type="submit" className="btn btn-primary btn-block rounded-2xl shadow-lg shadow-primary/20">
-            Save Targets
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+      </div>
     </>
   )
 }
