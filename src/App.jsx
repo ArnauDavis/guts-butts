@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useState } from "react"
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { supabase } from "../utils/supabaseClient.js"
@@ -125,27 +126,40 @@ function App() {
     else setStats(stats.filter(stat => stat.id !== id))
   }
 
+  function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
   if (loading) return <div className="min-h-screen bg-base-100" /> // Simple loader
 
   return (
     <>
     <BrowserRouter>
-    <Header session={session} />
-      <div className="min-h-screen flex flex-col">
-        {!session ? (
-          <Auth />
-        ) : (
-          <>
-            
-            <main className="grow space-y-8 pb-20">
-              <TotalStats stats={stats} goals={goals} updateGoals={updateGoals}/>
-              <StatChange addStat={addStat} />
-              <StatsHistory stats={stats} updateStat={updateStat} deleteStat={deleteStat} />
-            </main>
-            
-          </>
-        )}
-      </div>
+    <ScrollToTop/>
+      <Header session={session} />
+        <div className="min-h-screen flex flex-col">
+          {!session ? (
+            <Auth />
+          ) : (
+            <>
+
+              <main className="grow space-y-8 pb-20">
+                <Routes>
+                <Route path="/" element={<TotalStats stats={stats} goals={goals} updateGoals={updateGoals}/>} />
+                <Route path="/addstats" element={<StatChange addStat={addStat} />} />
+                <Route path="/stats" element={<StatsHistory stats={stats} updateStat={updateStat} deleteStat={deleteStat} />}/>
+                </Routes>
+              </main>
+              
+            </>
+          )}
+        </div>
       <Footer />
     </BrowserRouter>
     </>

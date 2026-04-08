@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from "../../utils/supabaseClient.js"
 
 function Header({session}) {
@@ -24,13 +25,13 @@ function Header({session}) {
                   <ul
                     tabIndex={0}
                     className="menu menu-sm dropdown-content glass mt-3 w-52 p-2 shadow-2xl rounded-box border border-white/10 bg-base-100/80 backdrop-blur-2xl">
-                    <li><a className="hover:bg-primary/20">Homepage</a></li>
-                    <li><a className="hover:bg-primary/20">Portfolio</a></li>
-                    <li><a className="hover:bg-primary/20">About</a></li>
+                    <li><Link to={`/`} className="hover:bg-primary/20">Home</Link></li>
+                    <li><Link to={`/addstats`} className="hover:bg-primary/20">Add Stats</Link></li>
+                    <li><Link to={`/stats`} className="hover:bg-primary/20">Stats</Link></li>
 
                     {/* Divider and Logout */}
                     <div className="divider my-1 opacity-20"></div>
-                    <li className="menu-title opacity-40 text-[10px] uppercase tracking-widest">Account</li>
+                    <li className="menu-title opacity-90 text-[10px] uppercase tracking-widest text-accent">Account</li>
                     <li>
                       <button 
                         onClick={handleLogout}
