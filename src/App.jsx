@@ -9,6 +9,7 @@ import Footer from './components/Footer.jsx'
 import TotalStats from './components/TotalStats.jsx'
 import StatChange from './components/StatChange.jsx'
 import StatsHistory from "./components/StatsHistory.jsx"
+import UpdateGoals from './components/UpdateGoals.jsx'
 
 function App() {
   const [stats, setStats] = useState([])
@@ -149,9 +150,15 @@ function App() {
           ) : (
             <>
 
-              <main className="grow space-y-8 pb-20">
+              <main className="grow space-y-8 pb-20 mt-5 mx-1">
                 <Routes>
-                <Route path="/" element={<TotalStats stats={stats} goals={goals} updateGoals={updateGoals}/>} />
+                <Route path="/" element={
+                  <>
+                  <TotalStats stats={stats} goals={goals} updateGoals={updateGoals}/>
+                  <StatChange addStat={addStat} />
+                  <UpdateGoals goals={goals} updateGoals={updateGoals}/>
+                  </>
+                  } />
                 <Route path="/addstats" element={<StatChange addStat={addStat} />} />
                 <Route path="/stats" element={<StatsHistory stats={stats} updateStat={updateStat} deleteStat={deleteStat} />}/>
                 </Routes>

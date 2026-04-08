@@ -27,7 +27,7 @@ function Header({session}) {
                     className="menu menu-sm dropdown-content glass mt-3 w-52 p-2 shadow-2xl rounded-box border border-white/10 bg-base-100/80 backdrop-blur-2xl">
                     <li><Link to={`/`} className="hover:bg-primary/20">Home</Link></li>
                     <li><Link to={`/addstats`} className="hover:bg-primary/20">Add Stats</Link></li>
-                    <li><Link to={`/stats`} className="hover:bg-primary/20">Stats</Link></li>
+                    <li><Link to={`/stats`} className="hover:bg-primary/20">History</Link></li>
 
                     {/* Divider and Logout */}
                     <div className="divider my-1 opacity-20"></div>
