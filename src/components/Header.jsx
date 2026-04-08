@@ -1,45 +1,50 @@
 import React from 'react'
 import { supabase } from "../../utils/supabaseClient.js"
 
-function Header() {
+function Header({session}) {
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) console.error("Error logging out:", error.message);
+    const { error } = await supabase.auth.signOut()
+    if (error) console.error("Error logging out:", error.message)
   }
   return (
     <>
       <div className="sticky top-0 z-50 w-full px-2 pt-4">
         <div className="navbar glass min-h-16 rounded-2xl border border-white/10 shadow-lg px-4 backdrop-blur-xl bg-base-100/60">
           <div className="navbar-start">
-            <div className="dropdown">
-              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle hover:bg-base-content/10">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> 
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /> 
-                </svg>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content glass mt-3 w-52 p-2 shadow-2xl rounded-box border border-white/10 bg-base-100/80 backdrop-blur-2xl">
-                <li><a className="hover:bg-primary/20">Homepage</a></li>
-                <li><a className="hover:bg-primary/20">Portfolio</a></li>
-                <li><a className="hover:bg-primary/20">About</a></li>
-
-                {/* Divider and Logout */}
-                <div className="divider my-1 opacity-20"></div>
-                <li className="menu-title opacity-40 text-[10px] uppercase tracking-widest">Account</li>
-                <li>
-                  <button 
-                    onClick={handleLogout}
-                    className="text-error hover:bg-error/20 active:bg-error/30 transition-colors flex justify-between"
-                  >
-                    Logout
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+            {/*here is the dropdown for the header, the conditional checks to see if a user is logged in for it to work, otherwise it is gone */}
+            {!session ? (
+              <div></div>
+                ) : (
+                <div className="dropdown">
+                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle hover:bg-base-content/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> 
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /> 
                     </svg>
-                  </button>
-                </li>
-              </ul>
-            </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content glass mt-3 w-52 p-2 shadow-2xl rounded-box border border-white/10 bg-base-100/80 backdrop-blur-2xl">
+                    <li><a className="hover:bg-primary/20">Homepage</a></li>
+                    <li><a className="hover:bg-primary/20">Portfolio</a></li>
+                    <li><a className="hover:bg-primary/20">About</a></li>
+
+                    {/* Divider and Logout */}
+                    <div className="divider my-1 opacity-20"></div>
+                    <li className="menu-title opacity-40 text-[10px] uppercase tracking-widest">Account</li>
+                    <li>
+                      <button 
+                        onClick={handleLogout}
+                        className="text-error hover:bg-error/20 active:bg-error/30 transition-colors flex justify-between"
+                      >
+                        Logout
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
           </div>
 
           {/* Center: Brand */}

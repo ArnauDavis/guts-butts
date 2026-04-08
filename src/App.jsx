@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { supabase } from "../utils/supabaseClient.js"
 import './App.css'
 import Auth from "./components/Auth.jsx"
@@ -128,21 +129,25 @@ function App() {
 
   return (
     <>
-    <div className="min-h-screen flex flex-col">
-      {!session ? (
-        <Auth />
-      ) : (
-        <>
-          <Header session={session} />
-          <main className="grow space-y-8 pb-20">
-            <TotalStats stats={stats} goals={goals} updateGoals={updateGoals}/>
-            <StatChange addStat={addStat} />
-            <StatsHistory stats={stats} updateStat={updateStat} deleteStat={deleteStat} />
-          </main>
-          <Footer />
-        </>
-      )}
-    </div>
+    <BrowserRouter>
+    <Header session={session} />
+      <div className="min-h-screen flex flex-col">
+        {!session ? (
+          <Auth />
+        ) : (
+          <>
+            
+            <main className="grow space-y-8 pb-20">
+              <TotalStats stats={stats} goals={goals} updateGoals={updateGoals}/>
+              <StatChange addStat={addStat} />
+              <StatsHistory stats={stats} updateStat={updateStat} deleteStat={deleteStat} />
+            </main>
+            
+          </>
+        )}
+      </div>
+      <Footer />
+    </BrowserRouter>
     </>
     
     
