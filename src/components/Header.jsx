@@ -7,6 +7,14 @@ function Header({session}) {
     const { error } = await supabase.auth.signOut()
     if (error) console.error("Error logging out:", error.message)
   }
+
+  const closeDropdown = () => {
+    const elem = document.activeElement
+    if (elem) {
+      elem.blur()
+    }
+  }
+  
   return (
     <>
       <div className="sticky top-0 z-50 w-full px-2 pt-4">
@@ -25,9 +33,9 @@ function Header({session}) {
                   <ul
                     tabIndex={0}
                     className="menu menu-sm dropdown-content glass mt-3 w-52 p-2 shadow-2xl rounded-box border border-white/10 bg-base-100/80 backdrop-blur-2xl">
-                    <li><Link to={`/`} className="hover:bg-primary/20">Home</Link></li>
-                    <li><Link to={`/addstats`} className="hover:bg-primary/20">Add Stats</Link></li>
-                    <li><Link to={`/stats`} className="hover:bg-primary/20">History</Link></li>
+                    <li><Link to={`/`} className="hover:bg-primary/20" onClick={closeDropdown}>Home</Link></li>
+                    <li><Link to={`/addstats`} className="hover:bg-primary/20" onClick={closeDropdown}>Add Stats</Link></li>
+                    <li><Link to={`/stats`} className="hover:bg-primary/20" onClick={closeDropdown}>History</Link></li>
 
                     {/* Divider and Logout */}
                     <div className="divider my-1 opacity-20"></div>
